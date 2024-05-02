@@ -3,9 +3,9 @@
     <string name="app_label">SOS</string>
     <string name="bouton_problème">Il y\'a un problème</string>
     <string name="bouton_ok">Tout va bien</string>
-    <string name="home_button">Home</string>
-    <string name="settings_button">Settings</string>
-    <string name="log_button">History</string>
+    <string name="home_button">Accueil</string>
+    <string name="settings_button">Paramètres</string>
+    <string name="log_button">Historique</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <!-- Preference Titles -->

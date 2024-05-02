@@ -7,22 +7,28 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:theme="@style/Theme.SOSSafetyOnSnow">
 
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/bottom_navigation"/>
+        android:layout_above="@id/bottom_navigation"
+        android:theme="@style/Theme.SOSSafetyOnSnow"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:theme="@style/Theme.SOSSafetyOnSnow"
+        app:itemBackground="@color/white"
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/white"
         android:fadeScrollbars="true"
         app:labelVisibilityMode="selected"
         app:itemTextAppearanceActiveBoldEnabled="true"
-        app:menu="@menu/bottom_navigation_menu" />
+        app:menu="@menu/bottom_navigation_menu"
+        android:outlineSpotShadowColor="@color/light_blue"
+        android:outlineAmbientShadowColor="@color/dark_red"
+        app:itemActiveIndicatorStyle="@style/Theme.SOSSafetyOnSnow"/>
 </RelativeLayout>
