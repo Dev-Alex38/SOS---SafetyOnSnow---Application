@@ -3,10 +3,11 @@
     <color name="light_blue">#31a3dc</color>
     <color name="light_blue_variant">#FF80B3CC</color>
     <color name="dark_blue">#206c91</color>
-    <color name="dark_blue_variant">#FF0E394E</color>
+    <color name="dark_blue_variant">#3D748E</color>
     <color name="red">#F30B0B</color>
-    <color name="dark_red">#FF8E0C0C</color>
-    <color name="grey">#646464</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="red_variant">#E42525</color>
+    <color name="grey">#5C5C5C</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="transparent">#00000000</color>
 </resources>

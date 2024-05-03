@@ -5,7 +5,7 @@
     android:id="@+id/fragment_home"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="10dp"
+    android:layout_marginTop="15dp"
     android:background="@color/white"
     android:orientation="vertical"
     tools:context=".HomeFragment">
@@ -20,48 +20,46 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_gravity="center"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="20dp"
             android:src="@drawable/logototal" />
 
         <Button
             android:id="@+id/bouton_problem"
             android:layout_width="300dp"
-            android:layout_height="220dp"
+            android:layout_height="200dp"
             android:layout_gravity="center|top"
             android:layout_margin="10dp"
-            android:background="@drawable/round_square"
-            android:backgroundTint="@color/red"
+            android:background="@drawable/button_red_state"
             android:fontFamily="@font/verdanaa"
-            android:text="@string/bouton_problème"
-            android:textAlignment="center"
+            android:text="@string/button_problem"
             android:textColor="@color/white"
             android:textSize="25sp"
             android:textStyle="bold"
-            app:icon="@drawable/danger"
+            app:backgroundTint="@null"
+            app:icon="@drawable/ic_danger"
             app:iconGravity="textTop"
-            app:iconPadding="10dp"
+            app:iconPadding="15dp"
             app:iconSize="100dp"
             app:iconTint="@color/white" />
 
         <Button
             android:id="@+id/bouton_good"
             android:layout_width="300dp"
-            android:layout_height="220dp"
-            android:layout_gravity="center"
+            android:layout_height="200dp"
+            android:layout_gravity="center|top"
             android:layout_margin="10dp"
-            android:background="@drawable/round_square"
-            android:backgroundTint="@color/dark_blue"
+            android:background="@drawable/button_blue_state"
             android:fontFamily="@font/verdanaa"
-            android:text="@string/bouton_ok"
-            android:textAlignment="center"
+            android:text="@string/button_ok"
             android:textColor="@color/white"
             android:textSize="25sp"
             android:textStyle="bold"
-            app:icon="@drawable/done"
+            app:backgroundTint="@null"
+            app:icon="@drawable/ic_done"
             app:iconGravity="textTop"
-            app:iconPadding="20dp"
+            app:iconPadding="15dp"
             app:iconSize="100dp"
-            app:iconTint="@color/white"
-            tools:backgroundTint="@color/dark_blue" />
+            app:iconTint="@color/white" />
+
     </LinearLayout>
 </RelativeLayout>

@@ -8,14 +8,14 @@
         <item name="colorSecondaryVariant">@color/light_blue_variant</item>
         <item name="colorBackgroundFloating">@color/white</item>
         <item name="colorSurface">@color/white</item>
-        <item name="colorError">@color/dark_red</item>
+        <item name="colorError">@color/red</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorOnSecondary">@color/black</item>
         <item name="colorOnBackground">@color/black</item>
         <item name="colorOnSurface">@color/black</item>
         <item name="colorOnError">@color/white</item>
-        <item name="android:statusBarColor">@color/white</item>
-        <item name="colorControlHighlight">@color/light_blue</item>
+        <item name="android:statusBarColor">@color/dark_blue</item>
+        <item name="android:windowBackground">@color/white</item>
     </style>
 
     <style name="Theme.SOSSafetyOnSnow" parent="Base.Theme.SOSSafetyOnSnow" />

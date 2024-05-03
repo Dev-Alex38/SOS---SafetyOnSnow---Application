@@ -1,25 +1,13 @@
 <resources>
     <string name="app_name">SOS - SafetyOnSnow</string>
     <string name="app_label">SOS</string>
-    <string name="bouton_problème">Il y\'a un problème</string>
-    <string name="bouton_ok">Tout va bien</string>
+    <string name="button_problem">Il y\'a un problème</string>
+    <string name="button_ok">Tout va bien</string>
     <string name="home_button">Accueil</string>
     <string name="settings_button">Paramètres</string>
     <string name="log_button">Historique</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
-
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
-
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="popup_title">Êtes-vous sûr ?</string>
+    <string name="popup_subtitle">Attention ! Vous allez prévenir vos contacts d\'urgence.</string>
+    <string name="cancel_button">Annuler</string>
+    <string name="continuer_button">Continuer</string>
 </resources>
