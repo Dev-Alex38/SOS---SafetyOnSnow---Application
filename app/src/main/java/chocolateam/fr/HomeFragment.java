@@ -1,7 +1,7 @@
 package chocolateam.fr;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +11,8 @@ import android.widget.Button;
 import androidx.fragment.app.Fragment;
 
 public class HomeFragment extends Fragment {
+
+    Context context = getContext();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -37,7 +39,18 @@ public class HomeFragment extends Fragment {
         Button buttonClose = popupView.findViewById(R.id.button_close);
         buttonClose.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {problem_popup.dismiss();}});
+            public void onClick(View v) {
+                problem_popup.dismiss();
+            }
+        });
+        Button buttonConfirm = popupView.findViewById(R.id.button_confirm);
+        buttonConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                problem_popup.dismiss();
+            }
+        });
+        new EmergencyCallFunction().startCallFunction(0, context);
         problem_popup.setCancelable(false);
         problem_popup.show();
     }

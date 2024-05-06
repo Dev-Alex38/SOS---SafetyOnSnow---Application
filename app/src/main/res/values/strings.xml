@@ -10,4 +10,8 @@
     <string name="popup_subtitle">Attention ! Vous allez prévenir vos contacts d\'urgence.</string>
     <string name="cancel_button">Annuler</string>
     <string name="continuer_button">Continuer</string>
+    <string name="toast_contact_prevenus">Vos contacts d\'urgence ont été prévenus</string>
+    <string name="parametres_title">Parametres</string>
+    <string name="number_subtitle">Entrez les numéros de téléphone</string>
+    <string name="hint_edit_text">ex : 0601010101</string>
 </resources>
