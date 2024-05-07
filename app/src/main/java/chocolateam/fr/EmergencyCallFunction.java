@@ -15,22 +15,32 @@ public class EmergencyCallFunction {
     private final Handler mHandler = new Handler(Looper.getMainLooper());
 
     // Méthode pour démarrer l'action après un délai spécifique
-    public void startCallFunction(int delayMillis, Context context) {
+    public void startCallFunction(int delayMillis, Context context, ArrayList<String> contacts) {
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                callAction(context, new SettingsFragment().getContactsFromDatabase());
+                callAction(context, contacts);
             }
         }, delayMillis);
     }
 
     private void callAction(Context context, ArrayList<String> contacts) {
-        SmsManager smsManager = SmsManager.getDefault();
-        Intent sentIntent = new Intent("SMS_SENT");
-        PendingIntent sentPI = PendingIntent.getBroadcast(context, 0, sentIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        for (String contact : contacts) {
-            smsManager.sendTextMessage(contact, null, "Safety On Snow vous alerte ! Votre contact à été victime d'une chute.", sentPI, null);
+        if (contacts != null && !contacts.isEmpty()) {
+            SmsManager smsManager = SmsManager.getDefault();
+            Intent sentIntent = new Intent("SMS_SENT");
+            PendingIntent sentPI;
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+                sentPI = PendingIntent.getBroadcast(context, 0, sentIntent, PendingIntent.FLAG_IMMUTABLE);
+            } else {
+                sentPI = PendingIntent.getBroadcast(context, 0, sentIntent, PendingIntent.FLAG_MUTABLE);
+            }
+            for (String contact : contacts) {
+                smsManager.sendTextMessage(contact, null, "Safety On Snow vous alerte ! Votre contact a été victime d'une chute.", sentPI, null);
+            }
+            Toast.makeText(context, R.string.toast_contact_prevenus, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, R.string.empty_contact_list, Toast.LENGTH_SHORT).show();
         }
-        Toast.makeText(context, R.string.toast_contact_prevenus, Toast.LENGTH_SHORT).show();
     }
+
 }

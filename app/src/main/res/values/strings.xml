@@ -1,17 +1,33 @@
 <resources>
+    <!-- Labels -->
     <string name="app_name">SOS - SafetyOnSnow</string>
     <string name="app_label">SOS</string>
+    <string name="parametres_title">Parametres</string>
+    <string name="history_title">Historique</string>
+
+    <!-- Buttons -->
     <string name="button_problem">Il y\'a un problème</string>
     <string name="button_ok">Tout va bien</string>
     <string name="home_button">Accueil</string>
     <string name="settings_button">Paramètres</string>
     <string name="log_button">Historique</string>
-    <string name="popup_title">Êtes-vous sûr ?</string>
-    <string name="popup_subtitle">Attention ! Vous allez prévenir vos contacts d\'urgence.</string>
     <string name="cancel_button">Annuler</string>
     <string name="continuer_button">Continuer</string>
+
+    <!-- Toasts -->
+    <string name="empty_contact_list">La liste des contacts est vide.</string>
+    <string name="valid_phone_number">Veuillez saisir un numéro de téléphone valide</string>
+    <string name="delete_contact">Tous les contacts ont été supprimés</string>
+    <string name="add_contact">Contact ajouté à la base de données</string>
+    <string name="error_add_contact">Erreur lors de l\'ajout du contact à la base de données</string>
     <string name="toast_contact_prevenus">Vos contacts d\'urgence ont été prévenus</string>
-    <string name="parametres_title">Parametres</string>
+    <string name="delete_one_contact">Contact supprimé de la base de données</string>
+    <string name="contact_already_exists">Ce contact est déjà renseigné</string>
+
+    <!-- Others -->
+    <string name="problem_popup_title">Êtes-vous sûr ?</string>
+    <string name="problem_popup_subtitle">Attention ! Vous allez prévenir vos contacts d\'urgence.</string>
+    <string name="delete_popup_subtitle">Vous allez supprimer tous vos contacts d\'urgence.</string>
     <string name="number_subtitle">Entrez les numéros de téléphone</string>
-    <string name="hint_edit_text">ex : 0601010101</string>
+    <string name="hint_edit_text">ex : 0607080901</string>
 </resources>
