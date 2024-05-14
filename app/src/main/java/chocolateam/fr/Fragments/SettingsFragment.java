@@ -37,7 +37,8 @@ public class SettingsFragment extends Fragment {
     private ListView contactsContainer;
     private ContactsAdapter contactsAdapter;
     private ImageButton btnAddContact;
-    private Button btnAddFromApp;
+    private ImageButton btnAddFromApp;
+    private ImageButton btnClose;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -46,7 +47,7 @@ public class SettingsFragment extends Fragment {
         contactsContainer = rootView.findViewById(R.id.contactsContainer);
         dbHelper = new ContactsDatabaseHelper(getContext(), this);
         ImageButton btnDeleteAllContacts = rootView.findViewById(R.id.btn_delete_all_contacts);
-        Button btnAddContactPopup = rootView.findViewById(R.id.btn_add_contact_popup);
+        ImageButton btnAddContactPopup = rootView.findViewById(R.id.btn_add_contact_popup);
 
         ArrayList<String> contacts = dbHelper.getContactsFromDatabase();
 
@@ -91,7 +92,7 @@ public class SettingsFragment extends Fragment {
                 deleteAllContacts();
             }
         });
-        problem_popup.setCancelable(true);
+        problem_popup.setCancelable(false);
         problem_popup.show();
     }
 
@@ -120,6 +121,8 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 String phoneNumber = editTextContacts.getText().toString();
+                // Supprimer les espaces du numéro de téléphone
+                phoneNumber = phoneNumber.replaceAll("\\s+", "");
                 if (!phoneNumber.isEmpty() && phoneNumber.matches("^0[1-9]([-.\\s]?[0-9]{2}){4}$")) {
                     dbHelper.addContactToDatabase(phoneNumber, getContext());
                     editTextContacts.setText("");
@@ -134,10 +137,18 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 pickContact();
+                add_contact_popup.dismiss();
+            }
+        });
+        btnClose = popupView.findViewById(R.id.contact_button_close);
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                add_contact_popup.dismiss();
             }
         });
 
-        add_contact_popup.setCancelable(true);
+        add_contact_popup.setCancelable(false);
         add_contact_popup.show();
     }
 
@@ -162,20 +173,43 @@ public class SettingsFragment extends Fragment {
             }
             if (cursor != null && cursor.moveToFirst()) {
                 String phoneNumber = retrieveContactPhoneNumber(cursor);
-                dbHelper.addContactToDatabase(phoneNumber, getContext());
-                cursor.close();
+                if (phoneNumber != null && !phoneNumber.isEmpty()) {
+                    dbHelper.addContactToDatabase(phoneNumber, getContext());
+                    cursor.close();
+                } else {
+                    // Gérer le cas où le numéro de téléphone n'a pas pu être récupéré
+                    Toast.makeText(getContext(), "Impossible de récupérer le numéro de téléphone du contact sélectionné", Toast.LENGTH_SHORT).show();
+                }
             }
         }
     }
 
     private String retrieveContactPhoneNumber(Cursor cursor) {
         String phoneNumber = null;
-        int phoneNumberColumnIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
-        if (phoneNumberColumnIndex != -1) { // Vérifie si la colonne existe
-            phoneNumber = cursor.getString(phoneNumberColumnIndex);
-        } else {
-            // La colonne n'existe pas dans le résultat de la requête
-            throw new IllegalStateException("Phone number column not found");
+        int hasPhoneNumber = cursor.getInt(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
+        if (hasPhoneNumber > 0) {
+            // Le contact a un numéro de téléphone, rechercher dans les données de contact
+            String contactId = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+            Cursor phoneCursor = requireActivity().getContentResolver().query(
+                    ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                    null,
+                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
+                    new String[]{contactId},
+                    null);
+            if (phoneCursor != null) {
+                if (phoneCursor.moveToFirst()) {
+                    // Il peut y avoir plusieurs numéros de téléphone associés à un contact,
+                    // mais pour simplifier, nous prenons juste le premier numéro ici
+                    phoneNumber = phoneCursor.getString(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                    // Supprimer les espaces du numéro de téléphone
+                    phoneNumber = phoneNumber.replaceAll("\\s+", "");
+                    phoneNumber = phoneNumber.replaceAll("^\\+33|^\\+\\d{2}", "0");
+                }
+                phoneCursor.close();
+            } else {
+                // Gérer le cas où phoneCursor est null
+                Toast.makeText(getContext(),"Impossible de récupérer le numéro de téléphone du contact sélectionné", Toast.LENGTH_SHORT).show();
+            }
         }
         return phoneNumber;
     }

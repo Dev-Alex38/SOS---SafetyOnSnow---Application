@@ -34,9 +34,18 @@
     <!-- Popups -->
     <string name="problem_popup_title">Êtes-vous sûr ?</string>
     <string name="problem_popup_subtitle">Attention ! Vous allez prévenir vos contacts d\'urgence.</string>
-    <string name="number_subtitle">Entrez un numéro de téléphone</string>
     <string name="hint_edit_text">0607080901</string>
     <string name="delete_popup_subtitle">Vous allez supprimer tous vos contacts d\'urgence.</string>
+    <string name="contactpopup_title">Ajoutez un contact d\'urgence</string>
+    <string name="contactpopup_title2">OU</string>
+    <string name="contactpopup_subtitle1">Entrez un numéro de téléphone :</string>
+    <string name="contactpopup_subtitle2">Depuis les contacts :</string>
+
+    <!-- Préférences -->
+    <string name="pref1">Mode freestyle</string>
+    <string name="pref2">Prévenir vos contacts</string>
+    <string name="pref3">Prévenir uniquement les favoris</string>
+    <string name="pref4">Prévenir les secours</string>
 
     <!-- Others -->
 </resources>

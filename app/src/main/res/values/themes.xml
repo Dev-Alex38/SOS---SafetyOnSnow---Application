@@ -15,8 +15,8 @@
         <item name="colorOnSurface">@color/black</item>
         <item name="colorOnError">@color/white</item>
         <item name="android:statusBarColor">@color/dark_blue</item>
-        <item name="android:windowBackground">@color/white</item>
+        <item name="android:windowBackground">@color/transparent</item>
     </style>
 
-    <style name="Theme.SOSSafetyOnSnow" parent="Base.Theme.SOSSafetyOnSnow" />
+    <style name="Theme.SOSSafetyOnSnow" parent="Base.Theme.SOSSafetyOnSnow"/>
 </resources>

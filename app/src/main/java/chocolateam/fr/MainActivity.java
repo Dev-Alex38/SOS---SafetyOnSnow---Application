@@ -13,16 +13,18 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.util.ArrayList;
+
 import chocolateam.fr.Fragments.HistoryFragment;
 import chocolateam.fr.Fragments.HomeFragment;
 import chocolateam.fr.Fragments.SettingsFragment;
+import chocolateam.fr.Utils.HttpServerListener;
+import chocolateam.fr.Utils.LocationService;
 import chocolateam.fr.Utils.LocationUtils;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final int MY_PERMISSIONS_REQUEST_SEND_SMS = 1;
-    private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 2;
-    private static final int MY_PERMISSIONS_REQUEST_POST_NOTIFICATIONS = 3;
+    private static final int MY_PERMISSIONS_REQUEST_ALL = 100;
     BottomNavigationView bottomNavigationView;
 
     @Override
@@ -30,28 +32,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
-            // La permission n'est pas accordée, demandez-la à l'utilisateur
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.SEND_SMS}, MY_PERMISSIONS_REQUEST_SEND_SMS);
-        }
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // La permission n'est pas accordée, demandez-la à l'utilisateur
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION);
-        }
-
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-            // La permission n'est pas accordée, demandez-la à l'utilisateur
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, MY_PERMISSIONS_REQUEST_POST_NOTIFICATIONS);
-        }
+        checkAllPermissions();
 
         LocationUtils locationUtils = new LocationUtils();
         if (!locationUtils.isGPSEnabled(this)) {
-            // Le GPS n'est pas activé, demandez à l'utilisateur d'activer le GPS
-            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-            startActivity(intent);
+            requestGPSEnabling();
         }
 
+        startLocationService(); // Appel pour démarrer le service de localisation
+        new HttpServerListener(this).execute();
 
         moveToFragment(new HomeFragment());
 
@@ -69,7 +58,36 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void requestGPSEnabling() {
+        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        startActivity(intent);
+    }
+
     private void moveToFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+    }
+
+    private void startLocationService() {
+        Intent intent = new Intent(this, LocationService.class);
+        startService(intent);
+    }
+
+    private void checkAllPermissions() {
+        String[] permissions = {
+                Manifest.permission.SEND_SMS,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.POST_NOTIFICATIONS,
+                Manifest.permission.READ_CONTACTS};
+
+        ArrayList<String> permissionsToRequest = new ArrayList<>();
+        for (String permission : permissions) {
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
+                permissionsToRequest.add(permission);
+            }
+        }
+
+        if (!permissionsToRequest.isEmpty()) {
+            ActivityCompat.requestPermissions(this, permissionsToRequest.toArray(new String[0]), MY_PERMISSIONS_REQUEST_ALL);
+        }
     }
 }

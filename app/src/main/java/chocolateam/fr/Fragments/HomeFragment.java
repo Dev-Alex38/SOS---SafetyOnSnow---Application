@@ -17,7 +17,6 @@ import chocolateam.fr.EmergencyCallFunction;
 import chocolateam.fr.R;
 
 public class HomeFragment extends Fragment {
-
     private Context context;
     private ArrayList<String> contacts;
     private ContactsDatabaseHelper dbHelper;

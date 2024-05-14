@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -34,6 +33,7 @@ public class ReceiveFallFunction {
     private Context context;
     private ContactsDatabaseHelper dbHelper;
     private ArrayList<String> contacts;
+
     public ReceiveFallFunction(Context context) {
         this.context = context;
     }

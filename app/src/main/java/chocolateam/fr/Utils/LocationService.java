@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Bundle;
 import android.os.IBinder;
 
 import androidx.annotation.Nullable;
@@ -18,6 +19,28 @@ public class LocationService extends Service {
 
     private LocationManager mLocationManager;
     private SharedPreferences.Editor editor;
+    private final LocationListener locationListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(Location location) {
+            if (location != null) {
+                double latitude = location.getLatitude();
+                double longitude = location.getLongitude();
+                updateLocationInSharedPreferences(latitude, longitude);
+            }
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+        }
+    };
 
     @Nullable
     @Override
@@ -30,12 +53,7 @@ public class LocationService extends Service {
         super.onCreate();
         mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         editor = getSharedPreferences("LocationPrefs", Context.MODE_PRIVATE).edit();
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
         startLocationUpdates();
-        return START_STICKY;
     }
 
     private void startLocationUpdates() {
@@ -43,21 +61,23 @@ public class LocationService extends Service {
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
+
         mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                10000,   // 10 secondes
+                5000,   // 10 secondes
                 10, locationListener);
     }
 
-    private final LocationListener locationListener = new LocationListener() {
-        @Override
-        public void onLocationChanged(Location location) {
-            if (location != null) {
-                double latitude = location.getLatitude();
-                double longitude = location.getLongitude();
-                editor.putString("latitude", String.valueOf(latitude));
-                editor.putString("longitude", String.valueOf(longitude));
-                editor.apply();
-            }
+    private void updateLocationInSharedPreferences(double latitude, double longitude) {
+        editor.putString("latitude", String.valueOf(latitude));
+        editor.putString("longitude", String.valueOf(longitude));
+        editor.apply();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mLocationManager != null) {
+            mLocationManager.removeUpdates(locationListener);
         }
-    };
+    }
 }

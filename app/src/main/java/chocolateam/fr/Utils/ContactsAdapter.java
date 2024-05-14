@@ -17,7 +17,6 @@ import chocolateam.fr.ContactsDatabaseHelper;
 import chocolateam.fr.R;
 
 public class ContactsAdapter extends ArrayAdapter<String> {
-
     private final Context context;
     private final ArrayList<String> contacts;
     private final ContactsDatabaseHelper dbHelper;

@@ -54,22 +54,23 @@
                 android:orientation="vertical">
 
                 <ImageButton
+                    android:id="@+id/btn_add_contact_popup"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:backgroundTint="@color/white"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_add_contact" />
+
+                <ImageButton
                     android:id="@+id/btn_delete_all_contacts"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_marginBottom="5dp"
-                    android:layout_weight="2"
+                    android:layout_weight="1"
                     android:backgroundTint="@color/white"
                     android:scaleType="fitCenter"
                     android:src="@drawable/ic_delete_all" />
-
-                <Button
-                    android:id="@+id/btn_add_contact_popup"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:backgroundTint="@color/dark_blue"
-                    android:text="Ajouter un contact" />
             </LinearLayout>
         </LinearLayout>
 
@@ -83,45 +84,39 @@
             android:textSize="16sp"
             android:textStyle="bold" />
 
-        <TableLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-            <TableRow
+            <CheckBox
+                android:id="@+id/checkBox"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:text="@string/pref1"
+                android:textSize="15sp" />
 
-                <CheckBox
-                    android:id="@+id/checkBox"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="CheckBox" />
-
-                <CheckBox
-                    android:id="@+id/checkBox2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="CheckBox" />
-            </TableRow>
-
-            <TableRow
+            <CheckBox
+                android:id="@+id/checkBox2"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:text="@string/pref2"
+                android:textSize="15sp" />
 
-                <CheckBox
-                    android:id="@+id/checkBox3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="CheckBox" />
+            <CheckBox
+                android:id="@+id/checkBox3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/pref3"
+                android:textSize="15sp" />
 
-                <CheckBox
-                    android:id="@+id/checkBox4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="CheckBox" />
-            </TableRow>
-
-        </TableLayout>
+            <CheckBox
+                android:id="@+id/checkBox4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/pref4"
+                android:textSize="15sp" />
+        </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
