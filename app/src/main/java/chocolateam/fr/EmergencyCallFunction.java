@@ -2,6 +2,7 @@ package chocolateam.fr;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.location.LocationManager;
 import android.os.Handler;
 import android.os.Looper;
 import android.telephony.SmsManager;

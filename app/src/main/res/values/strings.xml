@@ -40,6 +40,7 @@
     <string name="contactpopup_title2">OU</string>
     <string name="contactpopup_subtitle1">Entrez un numéro de téléphone :</string>
     <string name="contactpopup_subtitle2">Depuis les contacts :</string>
+    <string name="fall_detected">Une chute a été detectée !</string>
 
     <!-- Préférences -->
     <string name="pref1">Mode freestyle</string>

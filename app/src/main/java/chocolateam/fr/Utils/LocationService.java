@@ -11,6 +11,8 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
@@ -26,6 +28,9 @@ public class LocationService extends Service {
                 double latitude = location.getLatitude();
                 double longitude = location.getLongitude();
                 updateLocationInSharedPreferences(latitude, longitude);
+
+                Log.d("LocationService", "Latitude: " + latitude + ", Longitude: " + longitude);
+                Toast.makeText(getApplicationContext(), "Latitude: " + latitude + ", Longitude: " + longitude, Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -35,10 +40,20 @@ public class LocationService extends Service {
 
         @Override
         public void onProviderEnabled(String provider) {
+            // Vérifiez si le fournisseur activé est GPS_PROVIDER
+            if (provider.equals(LocationManager.GPS_PROVIDER)) {
+                Log.d("LocationService", "GPS Provider enabled");
+                Toast.makeText(getApplicationContext(), "GPS Provider enabled", Toast.LENGTH_SHORT).show();
+            }
         }
 
         @Override
         public void onProviderDisabled(String provider) {
+            // Vérifiez si le fournisseur désactivé est GPS_PROVIDER
+            if (provider.equals(LocationManager.GPS_PROVIDER)) {
+                Log.d("LocationService", "GPS Provider disabled");
+                Toast.makeText(getApplicationContext(), "GPS Provider disabled", Toast.LENGTH_SHORT).show();
+            }
         }
     };
 

@@ -17,20 +17,20 @@
             android:gravity="center"
             android:paddingVertical="40dp">
 
-        <ImageView
-            android:layout_width="85dp"
-            android:layout_height="85dp"
-            android:src="@drawable/ic_person" />
+            <ImageView
+                android:layout_width="85dp"
+                android:layout_height="85dp"
+                android:src="@drawable/ic_person" />
         </LinearLayout>
 
         <ImageButton
             android:id="@+id/contact_button_close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/ic_close"
             android:layout_alignParentEnd="true"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"/>
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/ic_close" />
     </RelativeLayout>
 
     <LinearLayout
@@ -43,6 +43,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="5dp"
             android:layout_marginBottom="30dp"
             android:fontFamily="@font/verdanaa"
             android:text="@string/contactpopup_title"
@@ -115,9 +116,9 @@
             android:id="@+id/add_from_contact_app"
             android:layout_width="85dp"
             android:layout_height="80dp"
+            android:layout_marginBottom="10dp"
             android:backgroundTint="@color/transparent"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_contact_page"
-            android:layout_marginBottom="10dp"/>
+            android:src="@drawable/ic_contact_page" />
     </LinearLayout>
 </LinearLayout>

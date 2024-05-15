@@ -6,7 +6,9 @@ import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.CountDownTimer;
@@ -22,6 +24,7 @@ import java.util.ArrayList;
 
 import chocolateam.fr.ContactsDatabaseHelper;
 import chocolateam.fr.EmergencyCallFunction;
+import chocolateam.fr.MainActivity;
 import chocolateam.fr.R;
 
 public class ReceiveFallFunction {
@@ -56,7 +59,7 @@ public class ReceiveFallFunction {
         createNotificationChannel();
 
         // Display notification
-        showNotification();
+//        showNotification();
 
         // Show popup with timer
         showTimerPopup();
@@ -76,14 +79,31 @@ public class ReceiveFallFunction {
     }
 
     private void showNotification() {
+        // Créer l'intent pour l'activité de votre application
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        // Créer la notification
         Notification.Builder builder = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             builder = new Notification.Builder(context, CHANNEL_ID)
                     .setContentTitle("Chute détectée")
                     .setContentText("Une chute a été détectée. Cliquez pour plus de détails.")
-                    .setSmallIcon(R.drawable.ic_warning);
+                    .setSmallIcon(R.drawable.round_logo)
+                    .setContentIntent(pendingIntent) // Ajouter le PendingIntent à la notification
+                    .setAutoCancel(true); // Fermer la notification après le clic
+        } else {
+            // Pour les versions d'Android antérieures à Oreo, utilisez le constructeur par défaut
+            builder = new Notification.Builder(context)
+                    .setContentTitle("Chute détectée")
+                    .setContentText("Une chute a été détectée. Cliquez pour plus de détails.")
+                    .setSmallIcon(R.drawable.round_logo)
+                    .setContentIntent(pendingIntent) // Ajouter le PendingIntent à la notification
+                    .setAutoCancel(true); // Fermer la notification après le clic
         }
 
+        // Afficher la notification
         NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
         notificationManager.notify(NOTIFICATION_ID, builder.build());
     }
@@ -98,12 +118,13 @@ public class ReceiveFallFunction {
         Button cancelButton = dialogView.findViewById(R.id.btnCancel);
 
         final AlertDialog dialog = builder.create();
+        dialog.setCancelable(false);
         dialog.show();
 
         new CountDownTimer(COUNTDOWN_TIME, 1000) {
             public void onTick(long millisUntilFinished) {
                 if (!isCancelled) {
-                    textViewTimer.setText("Temps restant : " + millisUntilFinished / 1000 + " secondes");
+                    textViewTimer.setText("Temps restant avant l'appel d'urgence : " + millisUntilFinished / 1000 + " secondes");
                 }
             }
 
