@@ -60,6 +60,6 @@
             app:iconPadding="15dp"
             app:iconSize="100dp"
             app:iconTint="@color/white"
-            tools:visibility="invisible" />
+            tools:visibility="visible" />
     </LinearLayout>
 </RelativeLayout>

@@ -29,12 +29,17 @@ public class HomeFragment extends Fragment {
         dbHelper = new ContactsDatabaseHelper(getContext(), null);
 
         Button buttonProblem = rootView.findViewById(R.id.bouton_problem);
-
         buttonProblem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 problemPopup();
             }
+        });
+
+        Button buttonOk = rootView.findViewById(R.id.bouton_good);
+        buttonOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {}
         });
 
         // Récupérer les contacts de la base de données

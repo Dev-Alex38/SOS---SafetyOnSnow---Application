@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.CountDownTimer;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -59,7 +60,7 @@ public class ReceiveFallFunction {
         createNotificationChannel();
 
         // Display notification
-//        showNotification();
+        showNotification();
 
         // Show popup with timer
         showTimerPopup();
@@ -79,31 +80,14 @@ public class ReceiveFallFunction {
     }
 
     private void showNotification() {
-        // Créer l'intent pour l'activité de votre application
-        Intent intent = new Intent(context, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        // Créer la notification
         Notification.Builder builder = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             builder = new Notification.Builder(context, CHANNEL_ID)
                     .setContentTitle("Chute détectée")
                     .setContentText("Une chute a été détectée. Cliquez pour plus de détails.")
-                    .setSmallIcon(R.drawable.round_logo)
-                    .setContentIntent(pendingIntent) // Ajouter le PendingIntent à la notification
-                    .setAutoCancel(true); // Fermer la notification après le clic
-        } else {
-            // Pour les versions d'Android antérieures à Oreo, utilisez le constructeur par défaut
-            builder = new Notification.Builder(context)
-                    .setContentTitle("Chute détectée")
-                    .setContentText("Une chute a été détectée. Cliquez pour plus de détails.")
-                    .setSmallIcon(R.drawable.round_logo)
-                    .setContentIntent(pendingIntent) // Ajouter le PendingIntent à la notification
-                    .setAutoCancel(true); // Fermer la notification après le clic
+                    .setSmallIcon(R.drawable.round_logo);
         }
 
-        // Afficher la notification
         NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
         notificationManager.notify(NOTIFICATION_ID, builder.build());
     }
@@ -124,7 +108,9 @@ public class ReceiveFallFunction {
         new CountDownTimer(COUNTDOWN_TIME, 1000) {
             public void onTick(long millisUntilFinished) {
                 if (!isCancelled) {
-                    textViewTimer.setText("Temps restant avant l'appel d'urgence : " + millisUntilFinished / 1000 + " secondes");
+                    // Formater le texte en utilisant HTML pour mettre en gras le temps restant
+                    String text = "Temps restant avant l'appel d'urgence : <b>" + millisUntilFinished / 1000 + "</b> secondes";
+                    textViewTimer.setText(Html.fromHtml(text));
                 }
             }
 

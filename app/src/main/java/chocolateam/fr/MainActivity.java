@@ -18,8 +18,7 @@ import java.util.ArrayList;
 import chocolateam.fr.Fragments.HistoryFragment;
 import chocolateam.fr.Fragments.HomeFragment;
 import chocolateam.fr.Fragments.SettingsFragment;
-import chocolateam.fr.Utils.HttpServerListener;
-import chocolateam.fr.Utils.LocationService;
+import chocolateam.fr.Network.HttpServerListener;
 import chocolateam.fr.Utils.LocationUtils;
 
 public class MainActivity extends AppCompatActivity {
@@ -38,9 +37,6 @@ public class MainActivity extends AppCompatActivity {
         if (!locationUtils.isGPSEnabled(this)) {
             requestGPSEnabling();
         }
-
-        startLocationService(); // Appel pour démarrer le service de localisation
-        new HttpServerListener(this).execute();
 
         moveToFragment(new HomeFragment());
 
@@ -65,11 +61,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void moveToFragment(Fragment fragment) {
         getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
-    }
-
-    private void startLocationService() {
-        Intent intent = new Intent(this, LocationService.class);
-        startService(intent);
     }
 
     private void checkAllPermissions() {
