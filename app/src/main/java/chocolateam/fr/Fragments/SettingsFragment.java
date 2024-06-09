@@ -2,7 +2,9 @@ package chocolateam.fr.Fragments;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -13,6 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -39,6 +43,7 @@ public class SettingsFragment extends Fragment {
     private ImageButton btnAddContact;
     private ImageButton btnAddFromApp;
     private ImageButton btnClose;
+    private CheckBox checkBoxFavoritesOnly;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,6 +53,7 @@ public class SettingsFragment extends Fragment {
         dbHelper = new ContactsDatabaseHelper(getContext(), this);
         ImageButton btnDeleteAllContacts = rootView.findViewById(R.id.btn_delete_all_contacts);
         ImageButton btnAddContactPopup = rootView.findViewById(R.id.btn_add_contact_popup);
+        checkBoxFavoritesOnly = rootView.findViewById(R.id.checkBoxFavoritesOnly);
 
         ArrayList<String> contacts = dbHelper.getContactsFromDatabase();
 
@@ -66,6 +72,16 @@ public class SettingsFragment extends Fragment {
             public void onClick(View v) {
                 deleteConfirmPopup();
             }
+        });
+
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("appPreferences", Context.MODE_PRIVATE);
+        boolean isFavoritesOnly = sharedPreferences.getBoolean("favoritesOnly", false);
+        checkBoxFavoritesOnly.setChecked(isFavoritesOnly);
+
+        checkBoxFavoritesOnly.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("favoritesOnly", isChecked);
+            editor.apply();
         });
 
         return rootView;

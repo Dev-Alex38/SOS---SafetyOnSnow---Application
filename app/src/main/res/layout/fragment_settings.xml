@@ -106,7 +106,7 @@
                 android:textSize="15sp" />
 
             <CheckBox
-                android:id="@+id/pref3"
+                android:id="@+id/checkBoxFavoritesOnly"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/pref3"

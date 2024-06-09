@@ -10,10 +10,11 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import chocolateam.fr.Fragments.SettingsFragment;
+import chocolateam.fr.Utils.Contact;
 
 public class ContactsDatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "contacts.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;  // Changer la version de la base de données
     private SettingsFragment settingsFragment;
 
     public ContactsDatabaseHelper(Context context, SettingsFragment settingsFragment) {
@@ -23,22 +24,24 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE contacts (_id INTEGER PRIMARY KEY AUTOINCREMENT, phone_number TEXT);");
+        db.execSQL("CREATE TABLE contacts (_id INTEGER PRIMARY KEY AUTOINCREMENT, phone_number TEXT, is_favorite INTEGER DEFAULT 0);");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS contacts;");
-        onCreate(db);
+        if (oldVersion < 2) {
+            db.execSQL("ALTER TABLE contacts ADD COLUMN is_favorite INTEGER DEFAULT 0;");
+        }
     }
 
-    public ArrayList<String> getContactsFromDatabase() {
+    public ArrayList<Contact> getContactsFromDatabase() {
         SQLiteDatabase db = getReadableDatabase();
-        ArrayList<String> contactsList = new ArrayList<>();
+        ArrayList<Contact> contactsList = new ArrayList<>();
         Cursor cursor = db.query("contacts", null, null, null, null, null, null);
         while (cursor.moveToNext()) {
             String phoneNumber = cursor.getString(cursor.getColumnIndexOrThrow("phone_number"));
-            contactsList.add(phoneNumber);
+            boolean isFavorite = cursor.getInt(cursor.getColumnIndexOrThrow("is_favorite")) > 0;
+            contactsList.add(new Contact(phoneNumber, isFavorite));
         }
         cursor.close();
         return contactsList;
@@ -52,10 +55,12 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void addContactToDatabase(String phoneNumber, Context context) {
-        ArrayList<String> currentContacts = getContactsFromDatabase();
-        if (currentContacts.contains(phoneNumber)) {
-            Toast.makeText(context, R.string.contact_already_exists, Toast.LENGTH_SHORT).show();
-            return;
+        ArrayList<Contact> currentContacts = getContactsFromDatabase();
+        for (Contact contact : currentContacts) {
+            if (contact.getPhoneNumber().equals(phoneNumber)) {
+                Toast.makeText(context, R.string.contact_already_exists, Toast.LENGTH_SHORT).show();
+                return;
+            }
         }
 
         SQLiteDatabase db = getWritableDatabase();
@@ -67,5 +72,12 @@ public class ContactsDatabaseHelper extends SQLiteOpenHelper {
         } else {
             Toast.makeText(context, R.string.error_add_contact, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void updateContactFavoriteStatus(String phoneNumber, boolean isFavorite) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("is_favorite", isFavorite ? 1 : 0);
+        db.update("contacts", values, "phone_number = ?", new String[]{phoneNumber});
     }
 }
