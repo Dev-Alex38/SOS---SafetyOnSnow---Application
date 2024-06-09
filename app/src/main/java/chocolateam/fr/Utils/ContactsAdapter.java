@@ -56,10 +56,13 @@ public class ContactsAdapter extends ArrayAdapter<Contact> {
         return itemView;
     }
 
+    // Méthode pour mettre à jour la couleur du bouton favoris en fonction de l'état
     private void updateFavoriteButtonColor(ImageButton button, boolean isFavorite) {
         if (isFavorite) {
+            // Si le contact est favoris, définir la couleur du bouton sur jaune
             button.setColorFilter(context.getResources().getColor(R.color.yellow));
         } else {
+            // Sinon, définir la couleur du bouton sur gris
             button.setColorFilter(context.getResources().getColor(R.color.grey));
         }
     }
@@ -69,7 +72,7 @@ public class ContactsAdapter extends ArrayAdapter<Contact> {
         for (int i = 0; i < phoneNumber.length(); i++) {
             formattedNumber.append(phoneNumber.charAt(i));
             if ((i + 1) % 2 == 0 && (i + 1) != phoneNumber.length()) {
-                formattedNumber.append(" ");
+                formattedNumber.append(" "); // Ajouter un espace après chaque deux caractères
             }
         }
         return formattedNumber.toString();

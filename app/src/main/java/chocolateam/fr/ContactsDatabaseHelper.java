@@ -14,7 +14,7 @@ import chocolateam.fr.Utils.Contact;
 
 public class ContactsDatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "contacts.db";
-    private static final int DATABASE_VERSION = 2;  // Changer la version de la base de données
+    private static final int DATABASE_VERSION = 2;
     private SettingsFragment settingsFragment;
 
     public ContactsDatabaseHelper(Context context, SettingsFragment settingsFragment) {
